@@ -69,3 +69,5 @@ router.post("/updatepoint",(req,res)=>{
 router.delete("/updatepoint/:id",(req,res)=>{
     res.send("hello world")
 })
+
+export default router
