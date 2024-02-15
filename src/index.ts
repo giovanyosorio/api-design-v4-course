@@ -3,8 +3,8 @@ import router from "./router"
 import morgan from "morgan"
 import cors from "cors"
 const app=express()
-
-
+import *as dotenv from "dotenv"
+dotenv.config()
 
 app.use(morgan("dev"))
 app.use(express.json())
