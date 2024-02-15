@@ -4,6 +4,7 @@ import morgan from "morgan"
 import cors from "cors"
 const app=express()
 import *as dotenv from "dotenv"
+import { protect } from "./modules/auth"
 dotenv.config()
 
 app.use(morgan("dev"))
@@ -14,7 +15,7 @@ app.get("/",(req,res)=>{
     res.send("hello world")
 })
 
-app.use("/api",router)
+app.use("/api", protect,router)
 
 app.listen(3000,()=>{
     console.log("server listening on port http://localhost:3000")
