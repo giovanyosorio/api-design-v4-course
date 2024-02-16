@@ -6,12 +6,28 @@ return token
 }
 
 
-export const protect=(req,res)=>{
+export const protect=(req,res,next)=>{
     const bearer=req.headers.authorization
 
     if(!bearer){
         res.status(401).json({message:"No token"})
         return
+    }
+
+    const [,token]=bearer.split(" ")
+
+    if(!token){
+ 
+    }
+    try {
+        const user=jwt.verify(token,process.env.JWT_SECRET)
+        req.user=user
+        next()
+    } catch (error) {
+        console.log(error)
+        res.status(401).json({message:"No token"})
+        return
+        
     }
 
 }
