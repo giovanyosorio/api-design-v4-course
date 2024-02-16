@@ -1,5 +1,5 @@
 import prisma from "../db"
-import { createJWT, hashPassword } from "../modules/auth"
+import { comparePassword, createJWT, hashPassword } from "../modules/auth"
 
 export const createUser=async(req,res)=>{
     const user=await prisma.user.create({
@@ -11,4 +11,22 @@ export const createUser=async(req,res)=>{
 
     const token=createJWT(user)
     res.json({token})
+}
+
+export const signin =async (req,res)=>{
+    const user=await prisma.user.findUnique({
+        where:{
+            username:req.body.username
+
+        }
+    })
+    const isValid=await comparePassword(req.body.passsword,user.password)
+    if(isValid){
+        const token=createJWT(user)
+        res.json({token})
+    }
+    else{
+        res.status(401).json({message:"Invalid credentials"})
+        return
+    }
 }
