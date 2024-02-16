@@ -14,19 +14,19 @@ export const createUser=async(req,res)=>{
 }
 
 export const signin =async (req,res)=>{
+
     const user=await prisma.user.findUnique({
         where:{
             username:req.body.username
 
         }
     })
-    const isValid=await comparePassword(req.body.passsword,user.password)
+    const isValid = await comparePassword(req.body.password, user.password)
     if(isValid){
         const token=createJWT(user)
         res.json({token})
     }
     else{
         res.status(401).json({message:"Invalid credentials"})
-        return
     }
 }

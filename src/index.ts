@@ -5,6 +5,7 @@ import cors from "cors"
 const app=express()
 import *as dotenv from "dotenv"
 import { protect } from "./modules/auth"
+import { createUser, signin } from "./handlers/user"
 dotenv.config()
 
 app.use(morgan("dev"))
@@ -16,6 +17,10 @@ app.get("/",(req,res)=>{
 })
 
 app.use("/api", protect,router)
+
+app.post("/user",createUser)
+app.post("/signin", signin);
+
 
 app.listen(3000,()=>{
     console.log("server listening on port http://localhost:3000")
