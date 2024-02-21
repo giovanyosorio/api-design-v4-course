@@ -1,5 +1,5 @@
 import {Router} from "express"
-import {body, validationResult} from "express-validator"
+import {body, oneOf, validationResult} from "express-validator"
 import { handleInputErrors } from "./modules/middleware"
 
 const router=Router()
@@ -18,7 +18,7 @@ router.get("/product/:id",(req,res)=>{
 router.put("/product/:id",body("name"), handleInputErrors,(req,res)=>{
 
 })
-router.post("/product",(req,res)=>{
+router.post("/product",body("name"), handleInputErrors,(req,res)=>{
     res.send("hello world")
 })
 
@@ -38,10 +38,16 @@ router.get("/update/:id",(req,res)=>{
     res.send("hello world")
 })
 
-router.put("/update/:id",(req,res)=>{
+router.put("/update/:id",
+body("title").optional(),
+body("body").optional(),
+body("status").isIn(["IN_PROGRESS","SHIPPED","DEPRECATED"]),
+body("version").
+optional(),(req,res)=>{
     res.send("hello world")
 })
-router.post("/update",(req,res)=>{
+router.post("/update",body("title").exists(),
+body("body").exists().isString(),(req,res)=>{
     res.send("hello world")
 })
 
@@ -61,10 +67,10 @@ router.get("/updatepoint/:id",(req,res)=>{
     res.send("hello world")
 })
 
-router.put("/updatepoint/:id",(req,res)=>{
+router.put("/updatepoint/:id",body("name").optional().isString(),body("desciption").optional().isString(),(req,res)=>{
     res.send("hello world")
 })
-router.post("/updatepoint",(req,res)=>{
+router.post("/updatepoint",body("name").optional().isString(),body("desciption").optional().isString(),body("updateId").exists().isString(),(req,res)=>{
     res.send("hello world")
 })
 
