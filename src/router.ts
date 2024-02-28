@@ -1,23 +1,20 @@
 import {Router} from "express"
 import {body, oneOf, validationResult} from "express-validator"
 import { handleInputErrors } from "./modules/middleware"
+import { createProduct, getOneProduct, getProducts } from "./handlers/product"
 
 const router=Router()
 
 /**
  * Products 
  */
-router.get("/product",(req,res)=>{
-    res.send("hello world")
-})
+router.get("/product",getProducts)
 
 router.get("/product/:id",(req,res)=>{
     res.send("hello world")
 })
 
-router.put("/product/:id",body("name"), handleInputErrors,(req,res)=>{
-
-})
+router.put("/product/:id",body("name"), handleInputErrors,createProduct)
 router.post("/product",body("name"), handleInputErrors,(req,res)=>{
     res.send("hello world")
 })
