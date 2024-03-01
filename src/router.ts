@@ -63,4 +63,9 @@ router.delete("/updatepoint/:id",(req,res)=>{
     res.send("hello world")
 })
 
+
+router.use((error,req,res,next)=>{
+console.log(error)
+res.json({message:"in error handelr"})
+})
 export default router
