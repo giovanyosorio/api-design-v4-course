@@ -21,6 +21,12 @@ app.use("/api", protect,router)
 app.post("/user",createUser)
 app.post("/signin", signin);
 
+app.user((err,req,res,next)=>{
+    console.log(err)
+    res.json({
+        message:"there was an error"
+    })
+})
 
 app.listen(3000,()=>{
     console.log("server listening on port http://localhost:3000")
