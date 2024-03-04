@@ -6,6 +6,7 @@ const app=express()
 import *as dotenv from "dotenv"
 import { protect } from "./modules/auth"
 import { createUser, signin } from "./handlers/user"
+import config from "./config"
 dotenv.config()
 
 app.use(morgan("dev"))
@@ -23,7 +24,7 @@ app.use("/api", protect,router)
 app.post("/user",createUser)
 app.post("/signin", signin);
 
-app.user((err,req,res,next)=>{
+app.use((err,req,res,next)=>{
 if(err.type==="auth"){
     res.status(401).json({message:"unauthorized"})
 
@@ -35,6 +36,6 @@ if(err.type==="auth"){
 }
 })
 
-app.listen(3000,()=>{
-    console.log("server listening on port http://localhost:3000")
+app.listen(config.port,()=>{
+    console.log(`server listening on port http://localhost:${config.port}`)
 })
