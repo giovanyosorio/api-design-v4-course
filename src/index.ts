@@ -14,9 +14,7 @@ app.use(express.json())
 app.use(cors())
 app.use(express.urlencoded({extended:true}))
 app.get("/",(req,res,next)=>{
-    setTimeout(() => {
-        next( new Error("hello"))
-    }, 1);
+    res.json({message:"hello"})
 })
 
 app.use("/api", protect,router)
@@ -38,4 +36,5 @@ if(err.type==="auth"){
 
 app.listen(config.port,()=>{
     console.log(`server listening on port http://localhost:${config.port}`)
-})
+});
+export default app;
